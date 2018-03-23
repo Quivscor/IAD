@@ -2,12 +2,15 @@
 #include "Matrix.h"
 #include "Perceptron.h"
 #include <time.h>
+#include <windows.h>
 
 using namespace std;
 
 int main()
 {
-	Matrix m(3, 3);
-	m.display();
+	Matrix m(2, 3);
+	Matrix o = m.transpose();
+	o.display();
+	system("pause");
 	return 0;
 }
