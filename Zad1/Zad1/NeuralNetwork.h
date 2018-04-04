@@ -19,6 +19,7 @@ private:
 public:
 	NeuralNetwork(int input, int hidden, int output);
 	~NeuralNetwork();
-	void Feedforward(Matrix input);
+	Matrix Feedforward(Matrix input);
+	void Train(Matrix output, Matrix answer);
 };
 
