@@ -1,5 +1,10 @@
 #include "Matrix.h"
 
+Matrix::Matrix()
+{
+
+}
+
 Matrix::Matrix(int rows, int cols)
 {
 	for (int i = 0; i < rows; i++)
@@ -7,7 +12,7 @@ Matrix::Matrix(int rows, int cols)
 		vector<double> temp;
 		for (int j = 0; j < cols; j++)
 		{
-			temp.push_back(0);
+			temp.push_back((static_cast <float> (rand()) / static_cast <float> (RAND_MAX * 2)) - 1);		//Init with random number from -1.0 to 1.0
 		}
 		values.push_back(temp);
 	}
@@ -43,13 +48,13 @@ void Matrix::display()
 	}
 }
 
-void Matrix::map(f function)
+void Matrix::map(double(*f)(double))
 {
 	for (int i = 0; i < values.size(); i++)
 	{
 		for (int j = 0; j < values[i].size(); j++)
 		{
-			values[i][j] = function(values[i][j]);
+			values[i][j] = f(values[i][j]);
 		}
 	}
 }
