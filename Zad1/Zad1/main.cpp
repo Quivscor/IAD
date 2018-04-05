@@ -10,9 +10,9 @@ int main()
 {
 	srand(time(NULL));
 
-	NeuralNetwork brain(2, 2, 4);
+	NeuralNetwork brain(4, 2, 4);
 	Matrix m(4, 1);
-	Matrix n(3, 1);
+	Matrix n(1, 4);
 	Matrix o = m * n;
 	o.display();
 	m = brain.Feedforward(m);

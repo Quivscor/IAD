@@ -74,7 +74,9 @@ Matrix Matrix::operator*(double s)
 Matrix Matrix::operator*(Matrix _m)
 {
 	if (values[0].size() != _m.values.size())
+	{
 		throw invalid_argument("Wrong size of matrices.");
+	}
 
 	Matrix result(values.size(), _m.values[0].size());
 	for (int i = 0; i < result.values.size(); i++)
