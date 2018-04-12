@@ -3,20 +3,31 @@
 #include "NeuralNetwork.h"
 #include <time.h>
 #include <windows.h>
+#include <fstream>
 
 using namespace std;
 
 int main()
 {
 	srand(time(NULL));
+	Matrix input(2, 1, "Input.txt", 2);
+	Matrix answer(2, 1, "Answer.txt");
 
-	NeuralNetwork brain(4, 2, 4);
-	Matrix m(4, 1);
-	Matrix n(1, 4);
-	Matrix o = m * n;
-	o.display();
-	m = brain.Feedforward(m);
-	m.display();
+	input.display();
+	answer.display();
+
+	NeuralNetwork brain(2, 2, 2);
+	
+	for (int i = 0; i < 5; i++)
+	{
+		brain.Train(input, answer);
+		Matrix showTrain = brain.Feedforward(input);
+		showTrain.display();
+	}
+	Matrix output = brain.Feedforward(input);
+
+	output.display();
+
 	system("pause");
 	return 0;
 }
