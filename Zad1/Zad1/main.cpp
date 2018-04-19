@@ -4,29 +4,74 @@
 #include <time.h>
 #include <windows.h>
 #include <fstream>
+#include "Losowanie.h"
 
 using namespace std;
 
 int main()
 {
 	srand(time(NULL));
-	Matrix input(2, 1, "Input.txt", 2);
-	Matrix answer(2, 1, "Answer.txt");
 
-	input.display();
-	answer.display();
+	const int learning_base = 4;
+	fstream file("Input.txt", ios_base::in);
 
-	NeuralNetwork brain(2, 2, 2);
+	vector<Matrix> learning, answer;
+	for (int k = 0; k < learning_base; k++)
+	{
+		Matrix temp;
+		vector<vector<double>> temp2;
+		for (int i = 0; i < 4; i++)
+		{
+			vector<double> temp3;
+			double temp4;
+			file >> temp4;
+			temp3.push_back(temp4);
+			temp2.push_back(temp3);
+		}
+		temp = temp2;
+		learning.push_back(temp);
+		answer.push_back(temp);
+	}
+	file.close();
+
+	NeuralNetwork brain(4, 3, 4);
 	
+	int wylosowane[4];
+	int wylosowanych = 0;
+	int qqq = 0;
 	for (int i = 0; i < 5; i++)
 	{
-		brain.Train(input, answer);
-		Matrix showTrain = brain.Feedforward(input);
-		showTrain.display();
-	}
-	Matrix output = brain.Feedforward(input);
 
-	output.display();
+		qqq++;
+		if (qqq % 500 == 0)
+			cout << qqq << endl;
+		wylosowanych = 0;
+		do
+		{
+			Losowanie losuj;
+			int liczba = losuj.wylosuj();
+			if (losuj.czyBylaWylosowana(liczba, wylosowane, wylosowanych) == false)
+			{
+				wylosowane[wylosowanych] = liczba;
+				wylosowanych++;
+			}
+		} while (wylosowanych < 4);
+
+		for (int j = 0; j < 4; j++)
+		{
+			brain.Train(learning[wylosowane[j]], answer[wylosowane[j]]);
+			//Matrix showTrain = brain.Feedforward(learning[wylosowane[j]]);
+			//showTrain.print();
+			//showTrain.toFile(outFile);
+		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		Matrix output = brain.Feedforward(answer[i]);
+		answer[i].display();
+		output.display();
+	}
 
 	system("pause");
 	return 0;

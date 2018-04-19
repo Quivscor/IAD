@@ -115,12 +115,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Losowanie.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="NeuralNetwork.cpp" />
     <ClCompile Include="Perceptron.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gnuplot_i.hpp" />
+    <ClInclude Include="Losowanie.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="NeuralNetwork.h" />
     <ClInclude Include="Perceptron.h" />

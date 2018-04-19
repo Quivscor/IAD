@@ -11,7 +11,7 @@ class Matrix
 public:
 	vector<vector<double>> values;
 	Matrix();
-	Matrix(int rows, int cols, string filename, int skipInputs = 0);
+	Matrix(vector<vector<double>> vector);
 	Matrix(int rows, int cols);
 	Matrix(const Matrix &_m);
 	~Matrix();
@@ -24,5 +24,6 @@ public:
 	Matrix operator-(double s);
 	Matrix operator-(Matrix _m);
 	Matrix transpose();
+	double toScalar();
 };
 

@@ -5,28 +5,9 @@ Matrix::Matrix()
 
 }
 
-Matrix::Matrix(int rows, int cols, string filename, int skipInputs)
+Matrix::Matrix(vector<vector<double>> vector) : values(vector)
 {
-	fstream file(filename, std::ios_base::in);
-	if (skipInputs > 0)
-	{
-		int i = skipInputs;
-		double temp2;
-		for (i; i <= 0; i--)
-			file >> temp2;
-	}
-	for (int i = 0; i < rows; i++)
-	{
-		vector<double> temp;
-		for (int j = 0; j < cols; j++)
-		{
-			double temp2;
-			file >> temp2;
-			temp.push_back(temp2);		
-		}
-		values.push_back(temp);
-	}
-	file.close();
+
 }
 
 Matrix::Matrix(int rows, int cols)
@@ -36,7 +17,7 @@ Matrix::Matrix(int rows, int cols)
 		vector<double> temp;
 		for (int j = 0; j < cols; j++)
 		{
-			temp.push_back((static_cast <float> (rand()) / static_cast <float> (RAND_MAX * 2)) - 1);		//Init with random number from -1.0 to 1.0
+			temp.push_back((static_cast <float> (rand()) / static_cast <float> (RAND_MAX)));		//Init with random number from -1.0 to 1.0
 		}
 		values.push_back(temp);
 	}
@@ -196,4 +177,13 @@ Matrix Matrix::transpose()
 		}
 	}
 	return result;
+}
+
+double Matrix::toScalar()
+{
+	double sum = 0;
+	for (int i = 0; i < values.size(); i++)
+		for (int j = 0; j < values[0].size(); j++)
+			sum += values[i][j];
+	return sum;
 }

@@ -13,8 +13,8 @@ private:
 
 	int generation = 0; //will be used for plotting
 
-	double learningRate = 0.1;
-	double momentum = 0.1; //must be < 1
+	double learningRate = 0.5;
+	double momentum = 0; //must be < 1
 
 	Matrix weightsIH;
 	Matrix weightsHO;
@@ -29,6 +29,7 @@ public:
 	NeuralNetwork(int input, int hidden, int output, bool usingBias = true);
 	~NeuralNetwork();
 	Matrix Feedforward(Matrix input);
+	double SSError(vector<Matrix> input, vector<Matrix>, int size);
 	void Import(); //importing wages for testing
 	void Export(); //exporting files for plotting
 	void Train(Matrix input, Matrix answer);
