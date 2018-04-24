@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <fstream>
 #include "Losowanie.h"
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -36,36 +38,27 @@ int main()
 
 	NeuralNetwork brain(4, 3, 4);
 	
-	int wylosowane[4];
-	int wylosowanych = 0;
-	int qqq = 0;
-	for (int i = 0; i < 5; i++)
-	{
+	vector<int> wylosowane={0,1,2,3};
+	auto rng = std::default_random_engine{};
+	
+	
 
-		qqq++;
-		if (qqq % 500 == 0)
-			cout << qqq << endl;
-		wylosowanych = 0;
-		do
+
+		for (int i = 0; i < 1000; i++)
 		{
-			Losowanie losuj;
-			int liczba = losuj.wylosuj();
-			if (losuj.czyBylaWylosowana(liczba, wylosowane, wylosowanych) == false)
+			
+			std::shuffle(std::begin(wylosowane), std::end(wylosowane), rng);
+			
+
+			for (int j = 0; j < 4; j++)
 			{
-				wylosowane[wylosowanych] = liczba;
-				wylosowanych++;
+				brain.Train(learning[wylosowane[j]], answer[wylosowane[j]]);
+				//Matrix showTrain = brain.Feedforward(learning[wylosowane[j]]);
+				//showTrain.print();
+				//showTrain.toFile(outFile);
 			}
-		} while (wylosowanych < 4);
-
-		for (int j = 0; j < 4; j++)
-		{
-			brain.Train(learning[wylosowane[j]], answer[wylosowane[j]]);
-			//Matrix showTrain = brain.Feedforward(learning[wylosowane[j]]);
-			//showTrain.print();
-			//showTrain.toFile(outFile);
 		}
-	}
-
+	
 	for (int i = 0; i < 4; i++)
 	{
 		Matrix output = brain.Feedforward(answer[i]);
